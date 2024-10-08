@@ -1,17 +1,35 @@
+// server.js
 const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/database');
-const userRoutes = require('./Routes/users');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
+// Load environment variables from .env file
+dotenv.config();
 
-const ApiUrl = express();
+const app = express();
+const port = process.env.PORT || 5001;
 
-connectDB();
+// Middleware to parse JSON bodies
+app.use(express.json());
 
-ApiUrl.use(cors());
-ApiUrl.use(express.json());
-ApiUrl.use('/users', userRoutes);
+// Set mongoose strictQuery option
+mongoose.set('strictQuery', true);
 
-ApiUrl.listen(5001, () => {
-    console.log('Your API is running on port 5001');
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('MongoDB connected successfully');
+    })
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+    });
+
+// Define a simple route
+app.get('/', (req, res) => {
+    res.send('Hello, World! Your API is running.');
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Your API is running on port ${port}`);
 });
