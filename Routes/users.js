@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { createUser, getUsers, deleteUser, EditUser } = require('../Controllers/userController');
 
-// API marshrutlari
+// Create a user
 router.post('/', createUser);
+
+// Get all users
 router.get('/', getUsers);
-router.delete('/:id', deleteUser);
-router.put('/:id', EditUser);
+
+// Delete a user by ID
+router.delete('/:id', deleteUser); // Ensure the ID is passed in the URL
+router.put('/:id', EditUser)
 
 module.exports = router;
