@@ -1,5 +1,6 @@
 const User = require('../models/user');
 
+// Create a user
 const createUser = async (req, res) => {
     const { name, age, surname } = req.body;
 
@@ -16,6 +17,7 @@ const createUser = async (req, res) => {
     }
 };
 
+// Get all users
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -25,11 +27,12 @@ const getUsers = async (req, res) => {
     }
 };
 
+// Delete a user
 const deleteUser = async (req, res) => {
-    const { id } = req.params; // Получаем ID из параметров запроса
+    const { id } = req.params;
 
     try {
-        const user = await User.findByIdAndDelete(id); // Удаляем пользователя по ID
+        const user = await User.findByIdAndDelete(id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -40,10 +43,11 @@ const deleteUser = async (req, res) => {
     }
 };
 
-const EditUser = async (req, res) => {
-    const { id } = req.params; // Убедитесь, что 'id' берется из req.params
+// Edit a user
+const editUser = async (req, res) => {
+    const { id } = req.params;
     const { name, age, surname } = req.body;
-    
+
     try {
         const updatedUser = await User.findByIdAndUpdate(id, { name, age, surname }, { new: true });
         if (!updatedUser) {
@@ -56,7 +60,4 @@ const EditUser = async (req, res) => {
     }
 };
 
-
-
-
-module.exports = { createUser, getUsers, deleteUser, EditUser };
+module.exports = { createUser, getUsers, deleteUser, editUser };

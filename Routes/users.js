@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { createUser, getUsers, deleteUser, EditUser } = require('../Controllers/userController');
+const { createUser, getUsers, deleteUser, editUser } = require('../Controllers/userController');
 
 // Create a user
 router.post('/', createUser);
@@ -9,7 +9,9 @@ router.post('/', createUser);
 router.get('/', getUsers);
 
 // Delete a user by ID
-router.delete('/:id', deleteUser); // Ensure the ID is passed in the URL
-router.put('/:id', EditUser)
+router.delete('/:id', deleteUser);
+
+// Edit a user by ID
+router.put('/:id', editUser);
 
 module.exports = router;
